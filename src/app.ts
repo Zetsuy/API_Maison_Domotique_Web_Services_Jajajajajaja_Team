@@ -4,7 +4,6 @@ import path from "path";
 import logger from "morgan";
 import cookieParser from "cookie-parser";
 import cors from 'cors';
-//import auth, { xssProtect } from "@/middlewares/xss"
 
 // DB Connexion
 import connect from './db/dbConnect';
