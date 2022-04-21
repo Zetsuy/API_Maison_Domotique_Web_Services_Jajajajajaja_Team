@@ -59,6 +59,6 @@ Your route is open !
 
 Two applications can be used to use the back without going through the front.
 
-`Insomnia` which allows to execute HTTP commands ( `GET/POST/PATCH/DELETE/UPDATE/PUT/OPTIONS/HEAD` ) in order to add, update or delete elements in the database.
+`Insomnia` which allows to execute HTTP methods ( `GET/POST/PATCH/DELETE/UPDATE/PUT/OPTIONS/HEAD` ) in order to add, update or delete elements in the database.
 
 `MongoDB Compass` which displays the database and the items in it.
