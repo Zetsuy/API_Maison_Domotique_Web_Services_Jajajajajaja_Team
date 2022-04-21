@@ -12,7 +12,7 @@ var xssScript = async function (req: Request, res: Response, next: NextFunction)
     }
     next();
   } catch (error) {
-    throw new Error("xss error");
+    next(error);
   }
 }
 export default xssScript

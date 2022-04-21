@@ -10,7 +10,7 @@ var tokenVerify = async function (req: Request, res: Response, next: NextFunctio
         next();
     } catch (error) {
         console.log(tokenHeader[1]);
-        throw new Error("jwt verify error");
+        next(error);
     }
 };
 
