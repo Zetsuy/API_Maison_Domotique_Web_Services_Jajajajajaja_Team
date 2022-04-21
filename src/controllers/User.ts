@@ -55,7 +55,7 @@ export default {
         const resultat = new ApiResponse("Erreur :", undefined, err as Error)
         res.send(resultat);
       } else {
-        const resultat = new ApiResponse("succes", { token: token }, undefined);
+        const resultat = new ApiResponse("created", {id :user.id}, undefined);
         res.send(resultat);
       }
     });
