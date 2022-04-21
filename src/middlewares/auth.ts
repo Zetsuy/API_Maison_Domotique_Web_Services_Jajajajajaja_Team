@@ -2,6 +2,7 @@ import { NextFunction, Request, Response } from "express";
 import jwt from "jsonwebtoken";
 import config from "../config";
 
+// Middleware permettant la verification du Token
 var tokenVerify = async function (req: Request, res: Response, next: NextFunction) {
 
     let tokenHeader = req.headers.authorization!.split(" ");
