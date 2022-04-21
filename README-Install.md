@@ -15,7 +15,9 @@ In first you need to `Open a new Terminal`
 Inside it, `copy/paste the following command` : 
 
 ```ts
+
 npm install
+
 ```
 ---
 
@@ -24,10 +26,34 @@ npm install
 Inside the Terminal, `copy/paste the following command` : 
 
 ```ts
+
 npm start
+
 ```
 
 ---
+
+# Open Route ( If you use Windows )
+
+Go on https://ngrok.com/download and download `ngrok`'s zip.
+
+`Unzip the zip`.
+
+After that `open a new Terminal`.
+
+Inside it, `make the following commands` :
+
+```ts
+
+cd <PATH-OF-THE-NGROK-UNZIP>
+
+ngrok http 3000
+
+```
+
+Your route is open !
+
+----
 
 # Other Tools
 
