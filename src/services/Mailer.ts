@@ -1,4 +1,4 @@
-import IMailer from "@/interfaces/Imailer";
+import IMailer from "@/interfaces/IMailer";
 import { EventEmitter } from "stream";
 
 class Mailer extends EventEmitter implements IMailer {
