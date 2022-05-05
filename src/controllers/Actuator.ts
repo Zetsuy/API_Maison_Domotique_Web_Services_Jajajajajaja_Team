@@ -1,6 +1,9 @@
 import { NextFunction, Request, Response } from "express";
 import ActuatorModel from "../models/Actuator"
 import ApiResponse from "@/modules/Interface";
+import Mailer from "@/services/Mailer";
+import Emitter from "@/modules/Emitter";
+import { rmSync } from "fs";
 
 export default {
 
@@ -16,6 +19,7 @@ export default {
       } else {
         const resultat = new ApiResponse("Liste des actuators :", actuators, undefined)
         res.send(resultat);
+        Emitter.emit('new-mail', ({mail : "test@test.com", statut : "Code : " + res.statusCode, message : res.statusMessage}))
       }
     },)
   },

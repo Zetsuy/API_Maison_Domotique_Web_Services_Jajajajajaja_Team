@@ -16,8 +16,11 @@ import usersRouter from "@/routes/RoutesUser";
 import ApiResponse from "./modules/Interface";
 import config from "./config";
 import xssScript from "@/middlewares/xss";
+import Mailer from "./services/Mailer";
+import Emitter from "./modules/Emitter";
 
 const app = express();
+new Mailer(Emitter);
 
 const db = config.db;
 connect({ db });

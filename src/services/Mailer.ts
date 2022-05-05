@@ -3,9 +3,11 @@ import { EventEmitter } from "stream";
 import nodemailer from 'nodemailer';
 class Mailer extends EventEmitter implements IMailer {
 
-    constructor() {
+    constructor(emitter: EventEmitter) {
         super()
-        
+        emitter.on("new-mail", (e: {mail : string, statut : string, message : string}) => {
+            this.sendMail(e.mail, e.statut, e.message)
+        })
     }
 
     transporter = nodemailer.createTransport({
@@ -17,7 +19,13 @@ class Mailer extends EventEmitter implements IMailer {
         }
     });
 
-    sendStatus (mail : string, statut : string, message : string)  {
+    /**
+     * It sends an email to the user with the status of the request
+     * @param {string} mail - the email address of the recipient
+     * @param {string} statut - the subject of the email
+     * @param {string} message - The message you want to send.
+     */
+    sendMail (mail : string, statut : string, message : string)  {
 
         let info = this.transporter.sendMail({
             from: '"Jeremy" <test@test.com>', // sender address
@@ -31,19 +39,5 @@ class Mailer extends EventEmitter implements IMailer {
 
 }
 
-const myEmitter = new Mailer();
-
-
-/* It's listening for the event to be emitted. */
-myEmitter.on('event', (mail, statut, message) => {
-
-    myEmitter.sendStatus(mail, statut, message)
-
-
-});
-
-/* It's emitting the event.
-</code> */
-myEmitter.emit('event' , 'test@test.com', 'Ceci est un sujet LOL', 'et un message cordialement.');
 
 export default Mailer
