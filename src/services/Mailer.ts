@@ -4,7 +4,7 @@ import nodemailer from 'nodemailer';
 class Mailer extends EventEmitter implements IMailer {
 
     /* Creating a transporter object that will be used to send the email. */
-    transporter;
+    private transporter: nodemailer.Transporter;;
 
     /**
      * The constructor function takes an EventEmitter as a parameter and then uses the on() method to
