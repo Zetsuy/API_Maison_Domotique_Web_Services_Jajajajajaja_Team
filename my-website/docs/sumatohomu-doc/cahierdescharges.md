@@ -1,3 +1,7 @@
+---
+sidebar_label: 'Cahier des charges'
+sidebar_position: 2
+---
 # Express-TypeScript-Boilerplate
 
 Installation : 
