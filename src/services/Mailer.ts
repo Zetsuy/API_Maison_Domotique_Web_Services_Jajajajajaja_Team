@@ -3,6 +3,13 @@ import { EventEmitter } from "stream";
 import nodemailer from 'nodemailer';
 class Mailer extends EventEmitter implements IMailer {
 
+    /**
+     * The constructor function takes an EventEmitter as a parameter and then uses the on() method to
+     * listen for the "new-mail" event. When the event is emitted, the callback function is executed.
+     * The callback function uses the sendMail() method to send the email.
+     * </code>
+     * @param {EventEmitter} emitter - EventEmitter
+     */
     constructor(emitter: EventEmitter) {
         super()
         emitter.on("new-mail", (e: {mail : string, statut : string, message : string}) => {
@@ -10,6 +17,7 @@ class Mailer extends EventEmitter implements IMailer {
         })
     }
 
+    /* Creating a transporter object that will be used to send the email. */
     transporter = nodemailer.createTransport({
         host: 'localhost',
         port: 1025,
