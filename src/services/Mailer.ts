@@ -31,8 +31,19 @@ class Mailer extends EventEmitter implements IMailer {
 
 }
 
-const mailer = new Mailer();
+const myEmitter = new Mailer();
 
-mailer.sendStatus("ceciestuntest@test.com","Code 500","Erreur");
+
+/* It's listening for the event to be emitted. */
+myEmitter.on('event', (mail, statut, message) => {
+
+    myEmitter.sendStatus(mail, statut, message)
+
+
+});
+
+/* It's emitting the event.
+</code> */
+myEmitter.emit('event' , 'test@test.com', 'Ceci est un sujet LOL', 'et un message cordialement.');
 
 export default Mailer
