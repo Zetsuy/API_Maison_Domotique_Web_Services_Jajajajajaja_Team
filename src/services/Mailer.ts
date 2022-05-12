@@ -35,15 +35,21 @@ class Mailer extends EventEmitter implements IMailer {
      * @param {string} statut - the subject of the email
      * @param {string} message - The message you want to send.
      */
-    sendMail(mail: string, object: string, message: string) {
+    async sendMail(mail: string, object: string, message: string) {
 
-        let info = this.transporter.sendMail({
-            from: '"Jeremy" <test@test.com>', // sender address
-            to: mail, // list of receivers
-            subject: object, // Subject line
-            text: message, // plain text body
-            //html: "<b>Hello world?</b>", // html body
-        });
+        try{
+            let info = await this.transporter.sendMail({
+                from: '"Jeremy" <test@test.com>', // sender address
+                to: mail, // list of receivers
+                subject: object, // Subject line
+                text: message, // plain text body
+                //html: "<b>Hello world?</b>", // html body
+            });
+        }
+        catch(error){
+            console.log(error);
+        }
+        
 
     }
 
