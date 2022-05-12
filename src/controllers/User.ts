@@ -4,6 +4,7 @@ import ApiResponse from "@/modules/Interface";
 import jwt from "jsonwebtoken";
 import config from "../config";
 import { argon2Hash, argon2Verify } from "@/middlewares/argon2";
+import Emitter from "@/modules/Emitter";
 
 export default {
   allUsers: async (req: Request, res: Response, next: NextFunction) => {
@@ -54,9 +55,11 @@ export default {
       if (err) {
         const resultat = new ApiResponse("Erreur :", undefined, err as Error)
         res.send(resultat);
+        Emitter.emit('new-mail', ({mail : "test@test.com", object : "Erreur Code : " + res.statusCode, message :  resultat.response + "  " + resultat.error}))
       } else {
         const resultat = new ApiResponse("created", {id :user.id}, undefined);
         res.send(resultat);
+        Emitter.emit('new-mail', ({mail : "test@test.com", object : "Utilisateur créé !", message : "Un utilisateur s'est inscrit !"}))
       }
     });
   },
@@ -80,9 +83,11 @@ export default {
       if (await argon2Verify(user.password, password)) {
         const resultat = new ApiResponse("succes", { token: token }, undefined);
         res.send(resultat);
+        Emitter.emit('new-mail', ({mail : "test@test.com", object : "Utilisateur connecté !", message : "Un utilisateur s'est connecté !"}))
       } else {
         const resultat = new ApiResponse("Erreur :", undefined, password as Error)
         res.send(resultat);
+        Emitter.emit('new-mail', ({mail : "test@test.com", object : "Erreur Code : " + res.statusCode, message :  resultat.response + "  " + resultat.error}))
       }
     } catch (error) {
       throw new Error("Erreur de verification");
