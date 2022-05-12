@@ -17,7 +17,6 @@ export default {
       } else {
         const resultat = new ApiResponse("Liste des actuators :", actuators, undefined)
         res.send(resultat);
-        Emitter.emit('new-mail', ({mail : "test@test.com", statut : "Code : " + res.statusCode, message : res.statusMessage}))
       }
     },)
   },
@@ -42,9 +41,11 @@ export default {
       if (err) {
         const resultat = new ApiResponse("Erreur :", undefined ,err as Error)
         res.send(resultat);
+        Emitter.emit('new-mail', ({mail : "test@test.com", object : "Erreur Code : " + res.statusCode, message :  resultat.response + "  " + resultat.error}))
       } else {
         const resultat = new ApiResponse("Actuator créé :", actuator, undefined)
         res.send(resultat);
+        Emitter.emit('new-mail', ({mail : "test@test.com", object : "Code : " + res.statusCode + " : Actuator créé !", message : resultat.response + "  " + resultat.data}))
       }
     })
   },
@@ -58,9 +59,11 @@ export default {
         if (err) {
           const resultat = new ApiResponse("Erreur :", undefined ,err as Error)
           res.send(resultat);
+          Emitter.emit('new-mail', ({mail : "test@test.com", object : "Erreur Code : " + res.statusCode, message :  resultat.response + "  " + resultat.error}))
         } else {
           const resultat = new ApiResponse("Actuator modifié :", actuator, undefined)
           res.send(resultat);
+          Emitter.emit('new-mail', ({mail : "test@test.com", object :  "Code : " + res.statusCode + " : Actuator modifié !", message : resultat.response + "  " + resultat.data}))
         }
       }
     )
@@ -72,9 +75,11 @@ export default {
       if (err) {
         const resultat = new ApiResponse("Erreur :", undefined ,err as Error)
         res.send(resultat);
+        Emitter.emit('new-mail', ({mail : "test@test.com", statut : "Erreur Code : " + res.statusCode, message :  resultat.response + "  " + resultat.error}))
       } else {
         const resultat = new ApiResponse("Actuator supprimé.", undefined, undefined)
         res.send(resultat);
+        Emitter.emit('new-mail', ({mail : "test@test.com", object :  "Code : " + res.statusCode + " : Actuator supprimé !", message : resultat.response}))
       }
     })
   },
