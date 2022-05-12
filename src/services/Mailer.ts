@@ -15,8 +15,8 @@ class Mailer extends EventEmitter implements IMailer {
      */
     constructor(emitter: EventEmitter) {
         super()
-        emitter.on("new-mail", (e: { mail: string, statut: string, message: string }) => {
-            this.sendMail(e.mail, e.statut, e.message)
+        emitter.on("new-mail", (e: { mail: string, object: string, message: string }) => {
+            this.sendMail(e.mail, e.object, e.message)
         })
 
         this.transporter = nodemailer.createTransport({
@@ -35,12 +35,12 @@ class Mailer extends EventEmitter implements IMailer {
      * @param {string} statut - the subject of the email
      * @param {string} message - The message you want to send.
      */
-    sendMail(mail: string, statut: string, message: string) {
+    sendMail(mail: string, object: string, message: string) {
 
         let info = this.transporter.sendMail({
             from: '"Jeremy" <test@test.com>', // sender address
             to: mail, // list of receivers
-            subject: statut, // Subject line
+            subject: object, // Subject line
             text: message, // plain text body
             //html: "<b>Hello world?</b>", // html body
         });
