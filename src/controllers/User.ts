@@ -107,7 +107,7 @@ export default {
           const resultat = new ApiResponse("Erreur :", undefined, err as Error)
           res.send(resultat);
         } else {
-          const resultat = new ApiResponse("Utilisateur mis à jour :", user, undefined)
+          const resultat = new ApiResponse("Utilisateur mis à jour !", undefined)
           res.send(resultat);
         }
       }
