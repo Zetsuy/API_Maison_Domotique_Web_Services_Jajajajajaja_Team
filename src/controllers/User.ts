@@ -38,6 +38,7 @@ export default {
     const { email, password } = req.body;
     const user = new UserModel(req.body);
     const oldUser = await UserModel.findOne({ email });
+    // On fait une instance du service Authentification
     let Auth : IAuthentification = new Authentification();
 
     if (oldUser) {
@@ -93,7 +94,7 @@ export default {
         Emitter.emit('new-mail', ({mail : "test@test.com", object : "Erreur Code : " + res.statusCode, message :  resultat.response + "  " + resultat.error}))
       }
     } catch (error) {
-      throw new Error("Erreur de verification");
+      next(new Error("Erreur de verification"));
     }
   },
 
