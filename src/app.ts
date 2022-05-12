@@ -19,6 +19,22 @@ import xssScript from "@/middlewares/xss";
 import Mailer from "./services/Mailer";
 import Emitter from "./modules/Emitter";
 
+/* A handler for uncaught exceptions. */
+process.on('uncaughtException', (error, origin) => {
+  console.log('----- Exception-----')
+  console.log(error)
+  console.log('----- Origine-----')
+  console.log(origin)
+})
+
+/* A handler for unhandled promise rejections. */
+process.on('unhandledRejection', (reason, promise) => {
+  console.log('----- Erreur -----')
+  console.log(promise)
+  console.log('----- Raison -----')
+  console.log(reason)
+})
+
 const app = express();
 new Mailer(Emitter);
 
