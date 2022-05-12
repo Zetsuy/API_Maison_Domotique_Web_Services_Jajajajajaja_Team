@@ -3,7 +3,8 @@ import UserModel from "../models/User";
 import ApiResponse from "@/modules/Interface";
 import jwt from "jsonwebtoken";
 import config from "../config";
-import { argon2Hash, argon2Verify } from "@/middlewares/argon2";
+import Authentification from "@/services/Authentification";
+import { IAuthentification } from "@/interfaces/IAuthentification";
 import Emitter from "@/modules/Emitter";
 
 export default {
@@ -37,12 +38,13 @@ export default {
     const { email, password } = req.body;
     const user = new UserModel(req.body);
     const oldUser = await UserModel.findOne({ email });
+    let Auth : IAuthentification = new Authentification();
 
     if (oldUser) {
       throw new Error("l'Utilisateur est déjà existant");
     }
 
-    user.password = await argon2Hash(password);
+    user.password = await Auth.argon2Hash(password);
 
     let token: string;
     try {
@@ -67,6 +69,7 @@ export default {
   postLogin: async (req: Request, res: Response, next: NextFunction) => {
     const { email, password } = req.body;
     const user = await UserModel.findOne({ email });
+    let Auth : IAuthentification = new Authentification();
 
     if (!user) {
       throw new Error("Utilisateur non existant");
@@ -80,7 +83,7 @@ export default {
     }
 
     try {
-      if (await argon2Verify(user.password, password)) {
+      if (await Auth.argon2Verify(user.password, password)) {
         const resultat = new ApiResponse("succes", { token: token }, undefined);
         res.send(resultat);
         Emitter.emit('new-mail', ({mail : "test@test.com", object :  "Code : " + res.statusCode + " : Utilisateur connecté !", message : "Un utilisateur s'est connecté !"}))

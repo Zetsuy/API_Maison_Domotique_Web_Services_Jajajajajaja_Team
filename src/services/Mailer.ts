@@ -19,6 +19,7 @@ class Mailer extends EventEmitter implements IMailer {
             this.sendMail(e.mail, e.object, e.message)
         })
 
+
         this.transporter = nodemailer.createTransport({
             host: 'localhost',
             port: 1025,
@@ -50,6 +51,7 @@ class Mailer extends EventEmitter implements IMailer {
             console.log(error);
         }
         
+
 
     }
 
