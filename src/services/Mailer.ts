@@ -15,9 +15,10 @@ class Mailer extends EventEmitter implements IMailer {
      */
     constructor(emitter: EventEmitter) {
         super()
-        emitter.on("mailer-mail", (e: { mail: string, statut: string, message: string }) => {
+        emitter.on("new-mail", (e: { mail: string, statut: string, message: string }) => {
             this.sendMail(e.mail, e.statut, e.message)
         })
+
 
         this.transporter = nodemailer.createTransport({
             host: 'localhost',

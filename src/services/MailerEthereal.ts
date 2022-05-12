@@ -30,7 +30,7 @@ class MailerEthereal extends EventEmitter implements IMailerEthereal {
                 return process.exit(1);
             }
 
-            console.log('Credentials obtained, sending message...');
+            console.log('Credentials obtained, ready to send messages');
 
             this.transporter = nodemailer.createTransport({
                 host: account.smtp.host,

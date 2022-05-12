@@ -17,10 +17,12 @@ import ApiResponse from "./modules/Interface";
 import config from "./config";
 import xssScript from "@/middlewares/xss";
 import MailerEthereal from "./services/MailerEthereal";
+import Mailer from "./services/Mailer";
 import Emitter from "./modules/Emitter";
 
 const app = express();
 new MailerEthereal(Emitter);
+new Mailer(Emitter);
 
 const db = config.db;
 connect({ db });
