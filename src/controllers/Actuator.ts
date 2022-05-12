@@ -1,9 +1,9 @@
 import { NextFunction, Request, Response } from "express";
 import ActuatorModel from "../models/Actuator"
 import ApiResponse from "@/modules/Interface";
-import Mailer from "@/services/Mailer";
+//import Mailer from "@/services/Mailer";
+//import MailerEthereal from "@/services/MailerEthereal"
 import Emitter from "@/modules/Emitter";
-import { rmSync } from "fs";
 
 export default {
 
