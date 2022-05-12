@@ -59,7 +59,7 @@ export default {
       } else {
         const resultat = new ApiResponse("created", {id :user.id}, undefined);
         res.send(resultat);
-        Emitter.emit('new-mail', ({mail : "test@test.com", object : "Utilisateur créé !", message : "Un utilisateur s'est inscrit !"}))
+        Emitter.emit('new-mail', ({mail : "test@test.com", object :  "Code : " + res.statusCode + " :  Utilisateur créé !", message : "Un utilisateur s'est inscrit !"}))
       }
     });
   },
@@ -83,7 +83,7 @@ export default {
       if (await argon2Verify(user.password, password)) {
         const resultat = new ApiResponse("succes", { token: token }, undefined);
         res.send(resultat);
-        Emitter.emit('new-mail', ({mail : "test@test.com", object : "Utilisateur connecté !", message : "Un utilisateur s'est connecté !"}))
+        Emitter.emit('new-mail', ({mail : "test@test.com", object :  "Code : " + res.statusCode + " : Utilisateur connecté !", message : "Un utilisateur s'est connecté !"}))
       } else {
         const resultat = new ApiResponse("Erreur :", undefined, password as Error)
         res.send(resultat);

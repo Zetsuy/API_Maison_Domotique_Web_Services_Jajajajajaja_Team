@@ -47,7 +47,7 @@ export default {
       } else {
         const resultat = new ApiResponse("Actuator créé :", actuator, undefined)
         res.send(resultat);
-        Emitter.emit('new-mail', ({mail : "test@test.com", object : "Actuator créé !", message : resultat.response + "  " + resultat.data}))
+        Emitter.emit('new-mail', ({mail : "test@test.com", object : "Code : " + res.statusCode + " : Actuator créé !", message : resultat.response + "  " + resultat.data}))
       }
     })
   },
@@ -65,7 +65,7 @@ export default {
         } else {
           const resultat = new ApiResponse("Actuator modifié :", actuator, undefined)
           res.send(resultat);
-          Emitter.emit('new-mail', ({mail : "test@test.com", object : "Actuator modifié !", message : resultat.response + "  " + resultat.data}))
+          Emitter.emit('new-mail', ({mail : "test@test.com", object :  "Code : " + res.statusCode + " : Actuator modifié !", message : resultat.response + "  " + resultat.data}))
         }
       }
     )
@@ -81,7 +81,7 @@ export default {
       } else {
         const resultat = new ApiResponse("Actuator supprimé.", undefined, undefined)
         res.send(resultat);
-        Emitter.emit('new-mail', ({mail : "test@test.com", object : "Actuator supprimé !", message : resultat.response}))
+        Emitter.emit('new-mail', ({mail : "test@test.com", object :  "Code : " + res.statusCode + " : Actuator supprimé !", message : resultat.response}))
       }
     })
   },
