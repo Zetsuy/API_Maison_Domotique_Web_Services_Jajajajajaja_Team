@@ -1,3 +1,7 @@
+---
+sidebar_label: 'Installation'
+sidebar_position: 1
+---
 # API MAISON DOMOTIQUE - JEREMY LACAZE-RUSQUES / JEREMY GARCIA
 
 
