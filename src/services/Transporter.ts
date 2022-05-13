@@ -22,7 +22,7 @@ nodemailer.createTestAccount((err, account) => {
         return process.exit(1);
     }
 
-    //console.log('Credentials obtained, ready to send messages');
+    console.log('Credentials obtained, ready to send messages');
 
     transporterEthereal = nodemailer.createTransport({
         host: account.smtp.host,
