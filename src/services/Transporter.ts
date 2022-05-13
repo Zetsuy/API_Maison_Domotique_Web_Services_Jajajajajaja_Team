@@ -1,8 +1,9 @@
 import nodemailer from 'nodemailer';
 
-let transporterList = [];
 
 let transporter: nodemailer.Transporter;
+let transporterEthereal: nodemailer.Transporter;
+let transporterList: nodemailer.Transporter[];
 
 transporter = nodemailer.createTransport({
     host: 'localhost',
@@ -13,7 +14,7 @@ transporter = nodemailer.createTransport({
     }
 });
 
-transporterList.push(transporter)
+//transporterList.push(transporter)
 
 nodemailer.createTestAccount((err, account) => {
     if (err) {
@@ -21,9 +22,9 @@ nodemailer.createTestAccount((err, account) => {
         return process.exit(1);
     }
 
-    console.log('Credentials obtained, ready to send messages');
+    //console.log('Credentials obtained, ready to send messages');
 
-    transporter = nodemailer.createTransport({
+    transporterEthereal = nodemailer.createTransport({
         host: account.smtp.host,
         port: account.smtp.port,
         secure: account.smtp.secure,
@@ -32,8 +33,12 @@ nodemailer.createTestAccount((err, account) => {
             pass: account.pass
         }
     });
+    //console.log(transporterEthereal)
+    transporterList = [transporter, transporterEthereal]
+    //console.log(transporterList)
 });
 
-transporterList.push(transporter)
+//transporterList.push(transporter)
+//console.log("------------------------------------------------------------------------")
 
 export {transporterList}
