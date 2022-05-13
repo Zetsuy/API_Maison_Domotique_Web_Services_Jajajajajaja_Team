@@ -3,7 +3,9 @@ import UserModel from "../models/User";
 import ApiResponse from "@/modules/Interface";
 import jwt from "jsonwebtoken";
 import config from "../config";
-import { argon2Hash, argon2Verify } from "@/middlewares/argon2";
+import Authentification from "@/services/Authentification";
+import { IAuthentification } from "@/interfaces/IAuthentification";
+import Emitter from "@/modules/Emitter";
 
 export default {
   allUsers: async (req: Request, res: Response, next: NextFunction) => {
@@ -36,12 +38,14 @@ export default {
     const { email, password } = req.body;
     const user = new UserModel(req.body);
     const oldUser = await UserModel.findOne({ email });
+    // On fait une instance du service Authentification
+    let Auth : IAuthentification = new Authentification();
 
     if (oldUser) {
       throw new Error("l'Utilisateur est déjà existant");
     }
 
-    user.password = await argon2Hash(password);
+    user.password = await Auth.argon2Hash(password);
 
     let token: string;
     try {
@@ -54,9 +58,11 @@ export default {
       if (err) {
         const resultat = new ApiResponse("Erreur :", undefined, err as Error)
         res.send(resultat);
+        Emitter.emit('new-mail', ({mail : "test@test.com", object : "Erreur Code : " + res.statusCode, message :  resultat.response + "  " + resultat.error}))
       } else {
         const resultat = new ApiResponse("created", {id :user.id}, undefined);
         res.send(resultat);
+        Emitter.emit('new-mail', ({mail : "test@test.com", object :  "Code : " + res.statusCode + " :  Utilisateur créé !", message : "Un utilisateur s'est inscrit !"}))
       }
     });
   },
@@ -64,6 +70,7 @@ export default {
   postLogin: async (req: Request, res: Response, next: NextFunction) => {
     const { email, password } = req.body;
     const user = await UserModel.findOne({ email });
+    let Auth : IAuthentification = new Authentification();
 
     if (!user) {
       throw new Error("Utilisateur non existant");
@@ -77,15 +84,17 @@ export default {
     }
 
     try {
-      if (await argon2Verify(user.password, password)) {
+      if (await Auth.argon2Verify(user.password, password)) {
         const resultat = new ApiResponse("succes", { token: token }, undefined);
         res.send(resultat);
+        Emitter.emit('new-mail', ({mail : "test@test.com", object :  "Code : " + res.statusCode + " : Utilisateur connecté !", message : "Un utilisateur s'est connecté !"}))
       } else {
         const resultat = new ApiResponse("Erreur :", undefined, password as Error)
         res.send(resultat);
+        Emitter.emit('new-mail', ({mail : "test@test.com", object : "Erreur Code : " + res.statusCode, message :  resultat.response + "  " + resultat.error}))
       }
     } catch (error) {
-      throw new Error("Erreur de verification");
+      next(new Error("Erreur de verification"));
     }
   },
 
@@ -99,7 +108,7 @@ export default {
           const resultat = new ApiResponse("Erreur :", undefined, err as Error)
           res.send(resultat);
         } else {
-          const resultat = new ApiResponse("Utilisateur mis à jour :", user, undefined)
+          const resultat = new ApiResponse("Utilisateur mis à jour !", undefined)
           res.send(resultat);
         }
       }

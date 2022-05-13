@@ -1,3 +1,3 @@
 export interface IMailer {
-     sendStatus: (mail : string, statut : string, message : string) => any
+     sendMail: (mail : string, object : string, message : string) => any
 }
