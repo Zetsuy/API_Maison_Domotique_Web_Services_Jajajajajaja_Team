@@ -19,7 +19,7 @@ class MailerEthereal extends EventEmitter implements IMailerEthereal {
      */
     constructor(emitter: EventEmitter) {
         super()
-        emitter.on("new-mail", (e: { mail: string, statut: string, message: string }) => {
+        emitter.on("mailEthereal", (e: { mail: string, statut: string, message: string }) => {
             this.sendMail(e.mail, e.statut, e.message)
         })
 
